@@ -1,7 +1,7 @@
 /**
- * Generates config.js from config.template.js by replacing placeholders
- * with environment variables (e.g. GitHub Secrets in CI).
- * Usage: CONTACT_EMAIL=... CONTACT_FACEBOOK=... node scripts/generate-config.js
+ * Generates config.js from config.template.js.
+ * In CI (GitHub Actions): values come from env vars set by the workflow from Repository Secrets.
+ * Locally: set CONTACT_EMAIL=... CONTACT_FACEBOOK=... etc., or leave unset to use defaults.
  */
 
 const fs = require('fs');
@@ -18,16 +18,17 @@ if (!fs.existsSync(templatePath)) {
 
 let content = fs.readFileSync(templatePath, 'utf8');
 
-// Defaults when Secrets are not set (so contact section works out of the box)
+// Values from env (in GitHub Actions these are set from Repository Secrets in the workflow)
+const fromSecret = (name) => process.env[name] !== undefined && String(process.env[name]).trim() !== '';
 const defaults = {
   CONTACT_EMAIL: 'yosifia015@gmail.com',
   CONTACT_FACEBOOK: 'https://www.facebook.com/yosefa.porat/',
 };
 const replacements = [
-  ['__CONTACT_EMAIL__', process.env.CONTACT_EMAIL || defaults.CONTACT_EMAIL],
-  ['__CONTACT_FACEBOOK__', process.env.CONTACT_FACEBOOK || defaults.CONTACT_FACEBOOK],
-  ['__CONTACT_INSTAGRAM__', process.env.CONTACT_INSTAGRAM || ''],
-  ['__GOOGLE_CLIENT_ID__', process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID_HERE'],
+  ['__CONTACT_EMAIL__', (process.env.CONTACT_EMAIL || '').trim() || defaults.CONTACT_EMAIL],
+  ['__CONTACT_FACEBOOK__', (process.env.CONTACT_FACEBOOK || '').trim() || defaults.CONTACT_FACEBOOK],
+  ['__CONTACT_INSTAGRAM__', (process.env.CONTACT_INSTAGRAM || '').trim()],
+  ['__GOOGLE_CLIENT_ID__', (process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID_HERE').trim()],
 ];
 
 for (const [placeholder, value] of replacements) {
@@ -55,7 +56,12 @@ if (!content.includes('__ALLOWED_EMAILS__')) {
 content = content.replace('__ALLOWED_EMAILS__', allowedEmails);
 
 fs.writeFileSync(outputPath, content, 'utf8');
-console.log('Generated config.js from template and env/secrets.');
+const usedSecrets = ['CONTACT_EMAIL', 'CONTACT_FACEBOOK', 'CONTACT_INSTAGRAM', 'GOOGLE_CLIENT_ID', 'ALLOWED_EMAILS'].filter(fromSecret);
+if (usedSecrets.length) {
+  console.log('Generated config.js — values from GitHub Secrets:', usedSecrets.join(', '));
+} else {
+  console.log('Generated config.js — using defaults (set Secrets in repo to override)');
+}
 
 function escapeForJsString(str) {
   if (typeof str !== 'string') return '';

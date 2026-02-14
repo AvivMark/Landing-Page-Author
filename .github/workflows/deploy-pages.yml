@@ -22,6 +22,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # GitHub Secrets (Settings → Secrets and variables → Actions) are passed as env vars here.
+      # The script reads process.env.CONTACT_EMAIL etc. and writes them into config.js.
       - name: Generate config from secrets
         run: node scripts/generate-config.js
         env:
