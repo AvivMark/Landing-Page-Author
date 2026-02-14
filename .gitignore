@@ -1,3 +1,6 @@
+# Generated at deploy time from config.template.js + GitHub Secrets (do not commit)
+config.js
+
 # Secrets and local overrides
 .env
 .env.*

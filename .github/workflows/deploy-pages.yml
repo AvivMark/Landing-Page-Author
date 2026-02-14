@@ -1,0 +1,51 @@
+# Deploy to GitHub Pages. Sensitive data is injected from Repository Secrets.
+# In repo: Settings > Pages > Source: GitHub Actions.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate config from secrets
+        run: node scripts/generate-config.js
+        env:
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+          CONTACT_FACEBOOK: ${{ secrets.CONTACT_FACEBOOK }}
+          CONTACT_INSTAGRAM: ${{ secrets.CONTACT_INSTAGRAM }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          ALLOWED_EMAILS: ${{ secrets.ALLOWED_EMAILS }}
+
+      - name: Prepare site folder
+        run: |
+          mkdir -p site
+          cp index.html config.js .nojekyll site/
+          cp -r images site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@3
+        with:
+          path: 'site'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@4
