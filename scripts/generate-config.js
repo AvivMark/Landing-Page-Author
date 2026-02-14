@@ -18,9 +18,14 @@ if (!fs.existsSync(templatePath)) {
 
 let content = fs.readFileSync(templatePath, 'utf8');
 
+// Defaults when Secrets are not set (so contact section works out of the box)
+const defaults = {
+  CONTACT_EMAIL: 'yosifia015@gmail.com',
+  CONTACT_FACEBOOK: 'https://www.facebook.com/yosefa.porat/',
+};
 const replacements = [
-  ['__CONTACT_EMAIL__', process.env.CONTACT_EMAIL || ''],
-  ['__CONTACT_FACEBOOK__', process.env.CONTACT_FACEBOOK || ''],
+  ['__CONTACT_EMAIL__', process.env.CONTACT_EMAIL || defaults.CONTACT_EMAIL],
+  ['__CONTACT_FACEBOOK__', process.env.CONTACT_FACEBOOK || defaults.CONTACT_FACEBOOK],
   ['__CONTACT_INSTAGRAM__', process.env.CONTACT_INSTAGRAM || ''],
   ['__GOOGLE_CLIENT_ID__', process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID_HERE'],
 ];
