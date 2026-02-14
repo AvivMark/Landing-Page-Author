@@ -39,4 +39,4 @@ The project has two files that matter:
 
 ## Language & RTL
 
-The entire page is in Hebrew with `dir="rtl"`. All UI labels, comments in config.js, and user-facing strings must remain in Hebrew. Fonts: Noto Serif Hebrew (headings), Noto Sans Hebrew (body), Bellefair (serif fallback).
+The entire page is in Hebrew with `dir="rtl"`. All UI labels, comments in config.js, and user-facing strings must remain in Hebrew. Fonts: Frank Ruhl Libre (headings), Heebo (body).
