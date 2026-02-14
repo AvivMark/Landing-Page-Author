@@ -113,7 +113,7 @@ const SITE_CONFIG = {
   // כדי להוסיף עורך נוסף, הוסיפו את האימייל שלו בשורה חדשה
   admin: {
     allowedEmails: [
-      "aviv27400@gmail.com",
+      "your-email@example.com",  // החלפו באימייל שלכם
     ],
     // ── Google OAuth Client ID ──
     // צרו Client ID בכתובת: https://console.cloud.google.com/apis/credentials
