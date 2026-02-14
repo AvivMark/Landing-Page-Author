@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">יוסיפיה פורת | סופרת</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@100;300;400;500;700;900&family=Noto+Sans+Hebrew:wght@100;300;400;500;700&family=Bellefair&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #C9A96E;
+      --bg-dark: #1A120B;
+      --bg-light: #F2E9DC;
+      --bg-warm: #E8DDD0;
+      --text-dark: #1A120B;
+      --text-light: #F2E9DC;
+      --terracotta: #A0522D;
+      --olive: #6B7B3A;
+      --gold: #C9A96E;
+      --gold-dim: rgba(201, 169, 110, 0.15);
+      --espresso: #2E1E12;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      color: var(--text-dark);
+      line-height: 1.8;
+      overflow-x: hidden;
+      background: var(--bg-light);
+    }
+
+    /* ── Noise texture overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10000;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav.scrolled {
+      background: rgba(26, 18, 11, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .nav a {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 400;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 1.1rem 1.3rem;
+      position: relative;
+      transition: color 0.3s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0.7rem;
+      right: 50%; left: 50%;
+      height: 1px;
+      background: var(--gold);
+      transition: all 0.3s ease;
+    }
+
+    .nav a:hover { color: var(--gold); }
+    .nav a:hover::after { right: 25%; left: 25%; }
+
+    .nav-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.3;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 25%, rgba(201, 169, 110, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 70% 75%, rgba(160, 82, 45, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse at 50% 100%, rgba(26, 18, 11, 0.9) 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .hero-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.3s ease forwards;
+    }
+
+    .hero-ornament-line {
+      width: 80px; height: 1px;
+      background: linear-gradient(to left, var(--gold), transparent);
+    }
+
+    .hero-ornament-diamond {
+      width: 8px; height: 8px;
+      border: 1px solid var(--gold);
+      transform: rotate(45deg);
+    }
+
+    .hero-image-wrap {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeScaleIn 1s 0.4s ease forwards;
+    }
+
+    .hero-author-image {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 8px rgba(201, 169, 110, 0.08), 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .hero-placeholder-avatar {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: linear-gradient(135deg, var(--espresso) 0%, #3D2B1F 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 8px rgba(201, 169, 110, 0.08), 0 20px 60px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-placeholder-avatar::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+    }
+
+    .hero-placeholder-avatar svg {
+      width: 52px; height: 52px;
+      fill: var(--gold);
+      opacity: 0.3;
+    }
+
+    .hero-name {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 900;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      color: var(--text-light);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      opacity: 0;
+      animation: nameReveal 1.2s 0.6s ease forwards;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-tagline {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 100;
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeSlideUp 1s 0.9s ease forwards;
+      text-transform: uppercase;
+    }
+
+    .hero-quote-wrap {
+      position: relative;
+      padding: 2.5rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeSlideUp 1s 1.1s ease forwards;
+    }
+
+    .hero-quote-mark {
+      position: absolute;
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-size: 8rem;
+      color: var(--gold);
+      opacity: 0.1;
+      line-height: 1;
+      top: -0.6rem;
+      right: 0.5rem;
+    }
+
+    .hero-quote {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 300;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      line-height: 2.2;
+      color: rgba(242, 233, 220, 0.8);
+      position: relative;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s 2s ease forwards;
+    }
+
+    .hero-scroll span {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      opacity: 0.5;
+    }
+
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── Divider patterns ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 0.5rem 0;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: linear-gradient(to left, var(--gold), transparent);
+    }
+
+    .section-divider-icon {
+      width: 10px; height: 10px;
+      border: 1px solid var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.5;
+    }
+
+    /* ── About ── */
+    .about-section {
+      background: var(--bg-light);
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .about-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .about-label {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .about-heading {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--text-dark);
+      margin-bottom: 3rem;
+      line-height: 1.2;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3px 1fr;
+      gap: 2.5rem;
+    }
+
+    .about-accent-bar {
+      background: linear-gradient(to bottom, var(--gold), var(--terracotta), transparent);
+      border-radius: 2px;
+    }
+
+    .about-text p {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-size: 1.2rem;
+      line-height: 2.1;
+      margin-bottom: 1.8rem;
+      color: var(--text-dark);
+      max-width: 700px;
+    }
+
+    .about-text p:first-of-type::first-letter {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-size: 4.5rem;
+      font-weight: 900;
+      float: right;
+      margin-left: 0.8rem;
+      margin-top: 0.2rem;
+      line-height: 0.75;
+      color: var(--terracotta);
+    }
+
+    /* ── Books ── */
+    .books-section {
+      background: var(--bg-dark);
+      padding: 8rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .books-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(201, 169, 110, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(160, 82, 45, 0.03) 0%, transparent 60%);
+    }
+
+    .books-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .books-label {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .books-heading {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .books-subtitle {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: rgba(242, 233, 220, 0.5);
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    /* Timeline layout */
+    .books-timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .books-timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      right: 50%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
+      opacity: 0.2;
+    }
+
+    .book-entry {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      align-items: center;
+      padding: 2.5rem 0;
+    }
+
+    .book-entry:nth-child(odd) .book-card-wrap { grid-column: 1; }
+    .book-entry:nth-child(odd) .book-timeline-node { grid-column: 2; }
+    .book-entry:nth-child(odd) .book-year-display { grid-column: 3; }
+
+    .book-entry:nth-child(even) .book-card-wrap { grid-column: 3; }
+    .book-entry:nth-child(even) .book-timeline-node { grid-column: 2; grid-row: 1; }
+    .book-entry:nth-child(even) .book-year-display { grid-column: 1; text-align: left; }
+
+    .book-timeline-node {
+      width: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .book-node-dot {
+      width: 12px; height: 12px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      background: var(--bg-dark);
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .book-entry:hover .book-node-dot {
+      background: var(--gold);
+      box-shadow: 0 0 20px rgba(201, 169, 110, 0.4);
+    }
+
+    .book-year-display {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      color: var(--gold);
+      opacity: 0.12;
+      text-align: right;
+      padding: 0 2rem;
+      transition: opacity 0.4s ease;
+    }
+
+    .book-entry:hover .book-year-display {
+      opacity: 0.3;
+    }
+
+    .book-card-wrap {
+      padding: 0 2rem;
+    }
+
+    .book-card {
+      background: rgba(242, 233, 220, 0.04);
+      border: 1px solid rgba(201, 169, 110, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: row;
+      max-width: 520px;
+    }
+
+    .book-entry:nth-child(odd) .book-card { margin-right: auto; margin-left: 0; }
+    .book-entry:nth-child(even) .book-card { margin-left: auto; margin-right: 0; }
+
+    .book-card:hover {
+      background: rgba(242, 233, 220, 0.07);
+      border-color: rgba(201, 169, 110, 0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+    }
+
+    .book-cover {
+      width: 140px;
+      min-height: 190px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-cover img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .book-cover-art {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      position: relative;
+    }
+
+    .book-cover-art::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid currentColor;
+      opacity: 0.15;
+    }
+
+    .book-cover-art .cover-title {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .book-cover-art .cover-author {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      margin-top: auto;
+      opacity: 0.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .book-cover-art .cover-ornament {
+      width: 20px; height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+      margin: 0.8rem 0;
+    }
+
+    .book-info {
+      padding: 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .book-info-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .book-info-year {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .book-info-genre {
+      font-size: 0.75rem;
+      color: rgba(242, 233, 220, 0.4);
+      font-weight: 300;
+    }
+
+    .book-info-title {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--text-light);
+      line-height: 1.4;
+      margin-bottom: 0.7rem;
+    }
+
+    .book-info-desc {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: rgba(242, 233, 220, 0.55);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--bg-warm);
+      padding: 7rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(ellipse at center, rgba(201, 169, 110, 0.06) 0%, transparent 60%);
+    }
+
+    .cta-inner {
+      max-width: 650px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-label {
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--terracotta);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-heading {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .cta-text {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--text-dark);
+      opacity: 0.6;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 2.8rem;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-btn-primary {
+      background: var(--text-dark);
+      color: var(--bg-light);
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--espresso);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(26, 18, 11, 0.25);
+    }
+
+    .cta-btn-secondary {
+      background: transparent;
+      color: var(--text-dark);
+      border: 1.5px solid var(--text-dark);
+    }
+
+    .cta-btn-secondary:hover {
+      background: var(--text-dark);
+      color: var(--bg-light);
+      transform: translateY(-2px);
+    }
+
+    .cta-btn svg {
+      width: 16px; height: 16px;
+      transition: transform 0.3s;
+    }
+
+    .cta-btn:hover svg {
+      transform: translateX(-4px);
+    }
+
+    /* ── Contact ── */
+    .contact-section {
+      background: var(--bg-dark);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: rgba(242, 233, 220, 0.6);
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      border: 1px solid rgba(201, 169, 110, 0.1);
+      transition: all 0.3s;
+      font-weight: 300;
+    }
+
+    .contact-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    .contact-link svg {
+      width: 18px; height: 18px;
+      opacity: 0.7;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--bg-dark);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: rgba(242, 233, 220, 0.2);
+      border-top: 1px solid rgba(201, 169, 110, 0.06);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeScaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes nameReveal {
+      from { opacity: 0; transform: translateY(40px); letter-spacing: 0.1em; }
+      to { opacity: 1; transform: translateY(0); letter-spacing: -0.02em; }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(1.3); transform-origin: top; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .books-timeline::before { display: none; }
+
+      .book-entry {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem 0;
+      }
+
+      .book-timeline-node { display: none; }
+
+      .book-year-display {
+        text-align: center !important;
+        font-size: 2rem;
+        opacity: 0.2;
+      }
+
+      .book-card-wrap { padding: 0; }
+
+      .book-card {
+        max-width: 100% !important;
+        margin: 0 !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav a {
+        font-size: 0.78rem;
+        padding: 1rem 0.7rem;
+      }
+
+      .nav-dot { display: none; }
+
+      .hero-name { font-size: 2.8rem; }
+
+      .hero-quote-wrap { padding: 1.5rem 1rem; }
+
+      .about-section, .books-section, .cta-section { padding: 5rem 1.5rem; }
+
+      .book-card { flex-direction: column; }
+
+      .book-cover {
+        width: 100%;
+        min-height: 160px;
+        max-height: 200px;
+      }
+
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-btn { width: 100%; max-width: 300px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <a href="#hero">ראשי</a>
+    <div class="nav-dot"></div>
+    <a href="#about">אודות</a>
+    <div class="nav-dot"></div>
+    <a href="#books">ספרים</a>
+    <div class="nav-dot"></div>
+    <a href="#cta">רכישה</a>
+    <div class="nav-dot"></div>
+    <a href="#contact">קשר</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <canvas class="hero-canvas" id="hero-canvas"></canvas>
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <div class="hero-ornament">
+        <div class="hero-ornament-line" style="transform: scaleX(-1)"></div>
+        <div class="hero-ornament-diamond"></div>
+        <div class="hero-ornament-line"></div>
+      </div>
+      <div class="hero-image-wrap" id="hero-image-wrap"></div>
+      <h1 class="hero-name" id="hero-name"></h1>
+      <p class="hero-tagline" id="hero-tagline"></p>
+      <div class="hero-quote-wrap">
+        <span class="hero-quote-mark">״</span>
+        <p class="hero-quote" id="hero-quote"></p>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>גלילה</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <div class="about-section" id="about">
+    <div class="about-inner reveal">
+      <p class="about-label">הסיפור</p>
+      <h2 class="about-heading" id="about-heading"></h2>
+      <div class="about-grid">
+        <div class="about-accent-bar"></div>
+        <div class="about-text" id="about-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Books -->
+  <div class="books-section" id="books">
+    <div class="books-inner">
+      <p class="books-label reveal">הספרייה</p>
+      <h2 class="books-heading reveal">הספרים</h2>
+      <p class="books-subtitle reveal">יצירות שמספרות את סיפור הארץ</p>
+      <div class="books-timeline" id="books-timeline"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section" id="cta">
+    <div class="cta-inner reveal">
+      <p class="cta-label">רכישה</p>
+      <h2 class="cta-heading" id="cta-heading"></h2>
+      <p class="cta-text" id="cta-text"></p>
+      <div class="cta-buttons" id="cta-buttons"></div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact-section" id="contact">
+    <div class="contact-inner reveal">
+      <h2 class="contact-heading" id="contact-heading"></h2>
+      <div class="contact-links" id="contact-links"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <span id="footer-text"></span>
+  </footer>
+
+  <style>
+    /* ── Edit Mode UI ── */
+    .edit-fab {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 99999;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: var(--gold, #C9A96E);
+      color: #1A120B;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-size: 0;
+    }
+    .edit-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,0,0,0.4); }
+    .edit-fab svg { width: 24px; height: 24px; }
+    .edit-fab.active { background: #E74C3C; }
+
+    .edit-toolbar {
+      position: fixed;
+      bottom: 2rem;
+      left: 5rem;
+      z-index: 99999;
+      display: none;
+      gap: 0.5rem;
+      align-items: center;
+      direction: ltr;
+    }
+    .edit-toolbar.visible { display: flex; }
+
+    .edit-toolbar button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .edit-toolbar button svg { width: 16px; height: 16px; }
+
+    .edit-btn-save {
+      background: #27AE60;
+      color: white;
+    }
+    .edit-btn-save:hover { background: #219A52; }
+
+    .edit-btn-download {
+      background: #2980B9;
+      color: white;
+    }
+    .edit-btn-download:hover { background: #2472A4; }
+
+    .edit-btn-reset {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2) !important;
+    }
+    .edit-btn-reset:hover { background: rgba(255,255,255,0.25); }
+
+    .edit-banner {
+      position: fixed;
+      top: 0;
+      left: 0; right: 0;
+      z-index: 99998;
+      background: #E74C3C;
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      direction: rtl;
+    }
+    .edit-banner.visible { transform: translateY(0); }
+
+    /* Editable element styles */
+    body.edit-mode [data-editable] {
+      outline: 2px dashed rgba(201, 169, 110, 0.5);
+      outline-offset: 4px;
+      cursor: text;
+      position: relative;
+      min-height: 1em;
+      transition: outline-color 0.2s;
+      border-radius: 4px;
+    }
+    body.edit-mode [data-editable]:hover {
+      outline-color: rgba(201, 169, 110, 0.9);
+    }
+    body.edit-mode [data-editable]:focus {
+      outline: 2px solid #C9A96E;
+      outline-offset: 4px;
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    /* Image edit overlay */
+    body.edit-mode [data-editable-img] {
+      position: relative;
+      cursor: pointer;
+    }
+    body.edit-mode [data-editable-img]::after {
+      content: 'החלף תמונה';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    body.edit-mode [data-editable-img]:hover::after {
+      opacity: 1;
+    }
+
+    /* Image URL modal */
+    .img-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .img-modal-overlay.visible { display: flex; }
+
+    .img-modal {
+      background: #2E1E12;
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 480px;
+      width: 90%;
+      direction: rtl;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+    }
+    .img-modal h3 {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      color: #F2E9DC;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .img-modal label {
+      color: rgba(242,233,220,0.7);
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .img-modal input[type="text"] {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      color: #F2E9DC;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+      direction: ltr;
+      text-align: right;
+    }
+    .img-modal input[type="text"]:focus {
+      outline: none;
+      border-color: #C9A96E;
+    }
+    .img-modal input[type="file"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      color: rgba(242,233,220,0.7);
+      font-size: 0.85rem;
+    }
+    .img-modal-preview {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: none;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+    }
+    .img-modal-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: flex-start;
+    }
+    .img-modal-actions button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .img-modal-ok {
+      background: #C9A96E;
+      color: #1A120B;
+    }
+    .img-modal-cancel {
+      background: rgba(255,255,255,0.1);
+      color: #F2E9DC;
+    }
+
+    /* ── Auth Login Modal ── */
+    .auth-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100002;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    .auth-modal-overlay.visible { display: flex; }
+
+    .auth-modal {
+      background: #2E1E12;
+      border: 1px solid rgba(201, 169, 110, 0.25);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      direction: rtl;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+    }
+    .auth-modal-icon {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(201, 169, 110, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .auth-modal-icon svg {
+      width: 28px; height: 28px;
+      stroke: #C9A96E;
+    }
+    .auth-modal h3 {
+      font-family: 'Noto Serif Hebrew', 'Bellefair', serif;
+      color: #F2E9DC;
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .auth-modal p {
+      color: rgba(242,233,220,0.5);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .auth-google-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.85rem 2rem;
+      background: white;
+      color: #1A120B;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .auth-google-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .auth-google-btn svg { width: 20px; height: 20px; }
+    .auth-error {
+      color: #E74C3C;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      display: none;
+    }
+    .auth-modal-close {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 32px; height: 32px;
+      border: none;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      color: rgba(242,233,220,0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .auth-modal-close:hover { background: rgba(255,255,255,0.1); color: #F2E9DC; }
+    .auth-modal-close svg { width: 16px; height: 16px; }
+
+    /* Logged-in user badge */
+    .auth-user-badge {
+      position: fixed;
+      bottom: 2rem;
+      left: 5rem;
+      z-index: 99998;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(39, 174, 96, 0.15);
+      border: 1px solid rgba(39, 174, 96, 0.3);
+      border-radius: 20px;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      font-size: 0.78rem;
+      color: #27AE60;
+      backdrop-filter: blur(8px);
+    }
+    .auth-user-badge.visible { display: flex; }
+    .auth-user-badge img {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+    }
+    .auth-logout {
+      background: none;
+      border: none;
+      color: rgba(231,76,60,0.7);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-family: 'Noto Sans Hebrew', sans-serif;
+      padding: 0 0.3rem;
+      margin-right: 0.3rem;
+      transition: color 0.2s;
+    }
+    .auth-logout:hover { color: #E74C3C; }
+
+    /* Hide edit FAB by default - shown only after auth */
+    .edit-fab { display: none; }
+    .edit-fab.authenticated { display: flex; }
+  </style>
+
+  <!-- Edit Mode UI -->
+  <button class="edit-fab" id="edit-fab" title="מצב עריכה">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+  </button>
+  <div class="edit-toolbar" id="edit-toolbar">
+    <button class="edit-btn-save" id="edit-save" title="שמור שינויים">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      שמור
+    </button>
+    <button class="edit-btn-download" id="edit-download" title="הורד config.js מעודכן">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      הורד config.js
+    </button>
+    <button class="edit-btn-reset" id="edit-reset" title="אפס שינויים">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      אפס
+    </button>
+  </div>
+  <div class="edit-banner" id="edit-banner">מצב עריכה פעיל — לחצו על כל טקסט או תמונה כדי לערוך</div>
+
+  <!-- Auth Login Modal -->
+  <div class="auth-modal-overlay" id="auth-modal">
+    <div class="auth-modal" style="position:relative">
+      <button class="auth-modal-close" id="auth-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="auth-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h3>כניסה למצב עריכה</h3>
+      <p>רק משתמשים מורשים יכולים לערוך את האתר.<br>התחברו עם חשבון Google מאושר.</p>
+      <div id="google-signin-btn"></div>
+      <p class="auth-error" id="auth-error">האימייל שלך לא מורשה לערוך את האתר</p>
+    </div>
+  </div>
+
+  <!-- Auth user badge -->
+  <div class="auth-user-badge" id="auth-badge">
+    <img id="auth-badge-pic" src="" alt="">
+    <span id="auth-badge-name"></span>
+    <button class="auth-logout" id="auth-logout">יציאה</button>
+  </div>
+
+  <!-- Image URL Modal -->
+  <div class="img-modal-overlay" id="img-modal">
+    <div class="img-modal">
+      <h3>החלפת תמונה</h3>
+      <label>הדביקו כתובת URL של תמונה:</label>
+      <input type="text" id="img-modal-url" placeholder="https://example.com/image.jpg">
+      <label>או העלו קובץ מהמחשב:</label>
+      <input type="file" id="img-modal-file" accept="image/*">
+      <img class="img-modal-preview" id="img-modal-preview">
+      <div class="img-modal-actions">
+        <button class="img-modal-ok" id="img-modal-ok">אישור</button>
+        <button class="img-modal-cancel" id="img-modal-cancel">ביטול</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+  (function () {
+    // ── Load saved edits from localStorage ──
+    const saved = localStorage.getItem('yosifia_edits');
+    if (saved) {
+      try {
+        const edits = JSON.parse(saved);
+        // Deep merge saved edits into SITE_CONFIG
+        function merge(target, source) {
+          for (const key in source) {
+            if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+              if (!target[key]) target[key] = {};
+              merge(target[key], source[key]);
+            } else {
+              target[key] = source[key];
+            }
+          }
+        }
+        merge(SITE_CONFIG, edits);
+      } catch(e) {}
+    }
+
+    const C = SITE_CONFIG;
+    const d = C.design;
+
+    // ── Apply colors ──
+    const root = document.documentElement;
+    root.style.setProperty('--primary', d.primaryColor || '#C9A96E');
+    root.style.setProperty('--gold', d.accentColor || '#C9A96E');
+    root.style.setProperty('--terracotta', d.primaryColor || '#A0522D');
+
+    // ── Page title ──
+    document.getElementById('page-title').textContent = C.siteTitle;
+
+    // ── Hero ──
+    const heroNameEl = document.getElementById('hero-name');
+    const heroTaglineEl = document.getElementById('hero-tagline');
+    const heroQuoteEl = document.getElementById('hero-quote');
+    heroNameEl.textContent = C.hero.authorName;
+    heroNameEl.setAttribute('data-editable', 'hero.authorName');
+    heroTaglineEl.textContent = C.hero.tagline;
+    heroTaglineEl.setAttribute('data-editable', 'hero.tagline');
+    heroQuoteEl.textContent = C.hero.quote;
+    heroQuoteEl.setAttribute('data-editable', 'hero.quote');
+
+    const imgWrap = document.getElementById('hero-image-wrap');
+    imgWrap.setAttribute('data-editable-img', 'author');
+    if (C.hero.authorImage) {
+      imgWrap.innerHTML = `<img class="hero-author-image" src="${C.hero.authorImage}" alt="${C.hero.authorName}">`;
+    } else {
+      imgWrap.innerHTML = `
+        <div class="hero-placeholder-avatar">
+          <svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/></svg>
+        </div>`;
+    }
+
+    // ── About ──
+    const aboutHeadingEl = document.getElementById('about-heading');
+    aboutHeadingEl.textContent = C.about.heading;
+    aboutHeadingEl.setAttribute('data-editable', 'about.heading');
+    const aboutText = document.getElementById('about-text');
+    C.about.paragraphs.forEach((p, i) => {
+      const el = document.createElement('p');
+      el.textContent = p;
+      el.setAttribute('data-editable', `about.paragraphs.${i}`);
+      aboutText.appendChild(el);
+    });
+
+    // ── Books ──
+    const timeline = document.getElementById('books-timeline');
+
+    const coverStyles = [
+      { bg: '#3D2B1F', fg: '#C9A96E' },
+      { bg: '#1A3A2A', fg: '#A8C5A0' },
+      { bg: '#2B1A3D', fg: '#C9A0C5' },
+      { bg: '#3D1A1A', fg: '#C9A0A0' },
+      { bg: '#1A2B3D', fg: '#A0B8C9' },
+    ];
+
+    C.books.forEach((book, i) => {
+      const style = coverStyles[i % coverStyles.length];
+      const entry = document.createElement('div');
+      entry.className = 'book-entry reveal';
+
+      let coverHTML;
+      if (book.coverImage) {
+        coverHTML = `<div class="book-cover" data-editable-img="book-${i}"><img src="${book.coverImage}" alt="${book.title}" loading="lazy"></div>`;
+      } else {
+        coverHTML = `
+          <div class="book-cover" data-editable-img="book-${i}">
+            <div class="book-cover-art" style="background:${style.bg}; color:${style.fg}">
+              <span class="cover-title">${book.title}</span>
+              <div class="cover-ornament"></div>
+              <span class="cover-author">${C.hero.authorName}</span>
+            </div>
+          </div>`;
+      }
+
+      entry.innerHTML = `
+        <div class="book-card-wrap">
+          <div class="book-card">
+            ${coverHTML}
+            <div class="book-info">
+              <div class="book-info-meta">
+                <span class="book-info-year" data-editable="books.${i}.year">${book.year}</span>
+                <span class="book-info-genre" data-editable="books.${i}.genre">${book.genre}</span>
+              </div>
+              <h3 class="book-info-title" data-editable="books.${i}.title">${book.title}</h3>
+              <p class="book-info-desc" data-editable="books.${i}.description">${book.description}</p>
+            </div>
+          </div>
+        </div>
+        <div class="book-timeline-node"><div class="book-node-dot"></div></div>
+        <div class="book-year-display">${book.year}</div>
+      `;
+      timeline.appendChild(entry);
+    });
+
+    // ── CTA ──
+    const ctaHeadingEl = document.getElementById('cta-heading');
+    const ctaTextEl = document.getElementById('cta-text');
+    ctaHeadingEl.textContent = C.cta.heading;
+    ctaHeadingEl.setAttribute('data-editable', 'cta.heading');
+    ctaTextEl.textContent = C.cta.text;
+    ctaTextEl.setAttribute('data-editable', 'cta.text');
+    const ctaButtons = document.getElementById('cta-buttons');
+    C.cta.buttons.forEach((btn, i) => {
+      const a = document.createElement('a');
+      a.href = btn.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = i === 0 ? 'cta-btn cta-btn-primary' : 'cta-btn cta-btn-secondary';
+      a.innerHTML = `${btn.label}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+      ctaButtons.appendChild(a);
+    });
+
+    // ── Contact ──
+    const contactHeadingEl = document.getElementById('contact-heading');
+    contactHeadingEl.textContent = C.contact.heading;
+    contactHeadingEl.setAttribute('data-editable', 'contact.heading');
+    const contactLinks = document.getElementById('contact-links');
+
+    if (C.contact.email) {
+      contactLinks.innerHTML += `
+        <a href="mailto:${C.contact.email}" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          ${C.contact.email}
+        </a>`;
+    }
+    if (C.contact.facebook) {
+      contactLinks.innerHTML += `
+        <a href="${C.contact.facebook}" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          פייסבוק
+        </a>`;
+    }
+    if (C.contact.instagram) {
+      contactLinks.innerHTML += `
+        <a href="${C.contact.instagram}" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          אינסטגרם
+        </a>`;
+    }
+    if (!C.contact.email && !C.contact.facebook && !C.contact.instagram) {
+      contactLinks.innerHTML = '<p style="opacity:0.3; color: var(--text-light); font-weight:300">פרטי יצירת קשר יתעדכנו בקרוב</p>';
+    }
+
+    // ── Footer ──
+    const year = new Date().getFullYear();
+    document.getElementById('footer-text').textContent = `\u00A9 ${year} ${C.hero.authorName} \u2014 כל הזכויות שמורות`;
+
+    // ── Floating dust particles on hero canvas ──
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animId;
+
+    function resizeCanvas() {
+      const hero = document.querySelector('.hero');
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+
+    function createParticles() {
+      particles = [];
+      const count = Math.floor((canvas.width * canvas.height) / 12000);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 1.5 + 0.3,
+          speedX: (Math.random() - 0.5) * 0.15,
+          speedY: (Math.random() - 0.5) * 0.1 - 0.05,
+          opacity: Math.random() * 0.3 + 0.05,
+          pulse: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.pulse += 0.008;
+
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+        if (p.y < -10) p.y = canvas.height + 10;
+        if (p.y > canvas.height + 10) p.y = -10;
+
+        const glow = p.opacity * (0.6 + 0.4 * Math.sin(p.pulse));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 169, 110, ${glow})`;
+        ctx.fill();
+      });
+      animId = requestAnimationFrame(drawParticles);
+    }
+
+    resizeCanvas();
+    createParticles();
+    drawParticles();
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createParticles();
+    });
+
+    // Pause particles when not visible
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) {
+        cancelAnimationFrame(animId);
+      } else {
+        drawParticles();
+      }
+    }, { threshold: 0 });
+    heroObserver.observe(document.querySelector('.hero'));
+
+    // ── Scroll reveal ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = `${idx * 0.08}s`;
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Nav background on scroll ──
+    const nav = document.getElementById('main-nav');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 80);
+
+      if (y > lastScroll && y > 200) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastScroll = y;
+    });
+
+    // ══════════════════════════════════════════════
+    //  AUTHENTICATION & REAL-TIME VISUAL EDITOR
+    // ══════════════════════════════════════════════
+    let editMode = false;
+    let currentImgTarget = null;
+    let authenticatedUser = null;
+
+    const fab = document.getElementById('edit-fab');
+    const toolbar = document.getElementById('edit-toolbar');
+    const banner = document.getElementById('edit-banner');
+    const imgModal = document.getElementById('img-modal');
+    const imgUrlInput = document.getElementById('img-modal-url');
+    const imgFileInput = document.getElementById('img-modal-file');
+    const imgPreview = document.getElementById('img-modal-preview');
+    const authModal = document.getElementById('auth-modal');
+    const authError = document.getElementById('auth-error');
+    const authBadge = document.getElementById('auth-badge');
+
+    const ALLOWED_EMAILS = C.admin ? C.admin.allowedEmails.map(e => e.toLowerCase()) : [];
+    const GOOGLE_CLIENT_ID = C.admin ? C.admin.googleClientId : '';
+
+    // ── Google Sign-In callback ──
+    function handleGoogleCredential(response) {
+      // Decode JWT token (payload is base64url in part 1)
+      const parts = response.credential.split('.');
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+      const email = payload.email.toLowerCase();
+      const name = payload.name || email;
+      const picture = payload.picture || '';
+
+      if (ALLOWED_EMAILS.includes(email)) {
+        // Authorized
+        authenticatedUser = { email, name, picture };
+        authError.style.display = 'none';
+        authModal.classList.remove('visible');
+        fab.classList.add('authenticated');
+
+        // Show user badge
+        document.getElementById('auth-badge-name').textContent = name;
+        const pic = document.getElementById('auth-badge-pic');
+        if (picture) {
+          pic.src = picture;
+          pic.style.display = 'block';
+        } else {
+          pic.style.display = 'none';
+        }
+        authBadge.classList.add('visible');
+
+        showToast('התחברת בהצלחה - לחצו על העיפרון כדי לערוך');
+      } else {
+        // Not authorized
+        authError.style.display = 'block';
+        authenticatedUser = null;
+      }
+    }
+
+    // Make callback global for Google
+    window.handleGoogleCredential = handleGoogleCredential;
+
+    // ── Initialize Google Sign-In button ──
+    function initGoogleSignIn() {
+      if (typeof google === 'undefined' || !google.accounts) {
+        // Google library not loaded yet, retry
+        setTimeout(initGoogleSignIn, 300);
+        return;
+      }
+      if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE') {
+        // No client ID configured - show edit button directly for local development
+        fab.classList.add('authenticated');
+        return;
+      }
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredential,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('google-signin-btn'),
+        {
+          theme: 'filled_black',
+          size: 'large',
+          shape: 'rectangular',
+          text: 'signin_with',
+          locale: 'he',
+          width: 280,
+        }
+      );
+    }
+
+    // Check for stored session
+    const storedAuth = sessionStorage.getItem('yosifia_auth');
+    if (storedAuth) {
+      try {
+        authenticatedUser = JSON.parse(storedAuth);
+        if (ALLOWED_EMAILS.includes(authenticatedUser.email)) {
+          fab.classList.add('authenticated');
+          document.getElementById('auth-badge-name').textContent = authenticatedUser.name;
+          const pic = document.getElementById('auth-badge-pic');
+          if (authenticatedUser.picture) {
+            pic.src = authenticatedUser.picture;
+            pic.style.display = 'block';
+          } else {
+            pic.style.display = 'none';
+          }
+          authBadge.classList.add('visible');
+        }
+      } catch(e) {}
+    }
+
+    // ── FAB click — show auth or toggle edit ──
+    fab.addEventListener('click', () => {
+      if (!authenticatedUser && GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID_HERE') {
+        // Need to authenticate first
+        authError.style.display = 'none';
+        authModal.classList.add('visible');
+        initGoogleSignIn();
+        return;
+      }
+
+      editMode = !editMode;
+      document.body.classList.toggle('edit-mode', editMode);
+      fab.classList.toggle('active', editMode);
+      toolbar.classList.toggle('visible', editMode);
+      banner.classList.toggle('visible', editMode);
+
+      if (editMode) {
+        if (authenticatedUser) {
+          sessionStorage.setItem('yosifia_auth', JSON.stringify(authenticatedUser));
+        }
+        enableEditing();
+      } else {
+        disableEditing();
+      }
+    });
+
+    // ── Auth modal close ──
+    document.getElementById('auth-close').addEventListener('click', () => {
+      authModal.classList.remove('visible');
+    });
+    authModal.addEventListener('click', (e) => {
+      if (e.target === authModal) authModal.classList.remove('visible');
+    });
+
+    // ── Logout ──
+    document.getElementById('auth-logout').addEventListener('click', () => {
+      authenticatedUser = null;
+      sessionStorage.removeItem('yosifia_auth');
+      fab.classList.remove('authenticated');
+      authBadge.classList.remove('visible');
+      if (editMode) {
+        editMode = false;
+        document.body.classList.remove('edit-mode');
+        fab.classList.remove('active');
+        toolbar.classList.remove('visible');
+        banner.classList.remove('visible');
+        disableEditing();
+      }
+      showToast('התנתקת בהצלחה');
+    });
+
+    function enableEditing() {
+      // Mark text elements as editable
+      document.querySelectorAll('[data-editable]').forEach(el => {
+        el.contentEditable = 'true';
+      });
+      // Mark images as clickable for replacement
+      document.querySelectorAll('[data-editable-img]').forEach(el => {
+        el.addEventListener('click', onImageClick);
+      });
+    }
+
+    function disableEditing() {
+      document.querySelectorAll('[data-editable]').forEach(el => {
+        el.contentEditable = 'false';
+      });
+      document.querySelectorAll('[data-editable-img]').forEach(el => {
+        el.removeEventListener('click', onImageClick);
+      });
+    }
+
+    // ── Image editing ──
+    function onImageClick(e) {
+      if (!editMode) return;
+      e.preventDefault();
+      e.stopPropagation();
+      currentImgTarget = e.currentTarget;
+      imgUrlInput.value = '';
+      imgFileInput.value = '';
+      imgPreview.style.display = 'none';
+
+      // Pre-fill with current src if it's an img
+      const img = currentImgTarget.querySelector('img');
+      if (img) {
+        imgUrlInput.value = img.src;
+        imgPreview.src = img.src;
+        imgPreview.style.display = 'block';
+      }
+      imgModal.classList.add('visible');
+    }
+
+    // URL preview
+    imgUrlInput.addEventListener('input', () => {
+      const url = imgUrlInput.value.trim();
+      if (url) {
+        imgPreview.src = url;
+        imgPreview.style.display = 'block';
+      } else {
+        imgPreview.style.display = 'none';
+      }
+    });
+
+    // File upload preview
+    imgFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          imgPreview.src = ev.target.result;
+          imgPreview.style.display = 'block';
+          imgUrlInput.value = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Confirm image change
+    document.getElementById('img-modal-ok').addEventListener('click', () => {
+      const url = imgUrlInput.value.trim();
+      if (url && currentImgTarget) {
+        const img = currentImgTarget.querySelector('img');
+        if (img) {
+          img.src = url;
+        } else {
+          // Replace placeholder with real image
+          const key = currentImgTarget.dataset.editableImg;
+          if (key === 'author') {
+            currentImgTarget.innerHTML = `<img class="hero-author-image" src="${url}" alt="${C.hero.authorName}">`;
+          } else {
+            currentImgTarget.innerHTML = `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover">`;
+          }
+        }
+      }
+      imgModal.classList.remove('visible');
+      currentImgTarget = null;
+    });
+
+    document.getElementById('img-modal-cancel').addEventListener('click', () => {
+      imgModal.classList.remove('visible');
+      currentImgTarget = null;
+    });
+
+    // Close modal on overlay click
+    imgModal.addEventListener('click', (e) => {
+      if (e.target === imgModal) {
+        imgModal.classList.remove('visible');
+        currentImgTarget = null;
+      }
+    });
+
+    // ── Save to localStorage ──
+    document.getElementById('edit-save').addEventListener('click', () => {
+      const edits = gatherEdits();
+      localStorage.setItem('yosifia_edits', JSON.stringify(edits));
+      showToast('השינויים נשמרו בדפדפן');
+    });
+
+    // ── Reset ──
+    document.getElementById('edit-reset').addEventListener('click', () => {
+      if (confirm('למחוק את כל השינויים ולחזור למקור?')) {
+        localStorage.removeItem('yosifia_edits');
+        location.reload();
+      }
+    });
+
+    // ── Download updated config.js ──
+    document.getElementById('edit-download').addEventListener('click', () => {
+      const edits = gatherEdits();
+      // Merge edits into a copy of original config
+      const merged = JSON.parse(JSON.stringify(SITE_CONFIG));
+      function deepMerge(t, s) {
+        for (const k in s) {
+          if (s[k] && typeof s[k] === 'object' && !Array.isArray(s[k])) {
+            if (!t[k]) t[k] = {};
+            deepMerge(t[k], s[k]);
+          } else {
+            t[k] = s[k];
+          }
+        }
+      }
+      deepMerge(merged, edits);
+
+      const configStr = generateConfigFile(merged);
+      const blob = new Blob([configStr], { type: 'text/javascript;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'config.js';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('הקובץ config.js הורד — החליפו אותו בתיקיית הפרויקט');
+    });
+
+    // ── Gather current page state ──
+    function gatherEdits() {
+      const edits = {};
+
+      // Hero
+      const heroName = document.getElementById('hero-name');
+      const heroTagline = document.getElementById('hero-tagline');
+      const heroQuote = document.getElementById('hero-quote');
+      edits.hero = {
+        authorName: heroName.textContent.trim(),
+        tagline: heroTagline.textContent.trim(),
+        quote: heroQuote.textContent.trim(),
+      };
+      const heroImg = document.querySelector('[data-editable-img="author"] img');
+      if (heroImg) {
+        edits.hero.authorImage = heroImg.src;
+      }
+
+      // About
+      const aboutHeading = document.getElementById('about-heading');
+      const aboutParagraphs = document.querySelectorAll('#about-text p');
+      edits.about = {
+        heading: aboutHeading.textContent.trim(),
+        paragraphs: Array.from(aboutParagraphs).map(p => p.textContent.trim()),
+      };
+
+      // Books
+      edits.books = [];
+      document.querySelectorAll('.book-entry').forEach((entry, i) => {
+        const title = entry.querySelector('.book-info-title');
+        const desc = entry.querySelector('.book-info-desc');
+        const year = entry.querySelector('.book-info-year');
+        const genre = entry.querySelector('.book-info-genre');
+        const coverImg = entry.querySelector('.book-cover img');
+        edits.books.push({
+          title: title ? title.textContent.trim() : C.books[i]?.title || '',
+          description: desc ? desc.textContent.trim() : C.books[i]?.description || '',
+          year: year ? year.textContent.trim() : C.books[i]?.year || '',
+          genre: genre ? genre.textContent.trim() : C.books[i]?.genre || '',
+          coverImage: coverImg ? coverImg.src : C.books[i]?.coverImage || '',
+        });
+      });
+
+      // CTA
+      edits.cta = {
+        heading: document.getElementById('cta-heading').textContent.trim(),
+        text: document.getElementById('cta-text').textContent.trim(),
+        buttons: C.cta.buttons,
+      };
+
+      // Contact
+      edits.contact = {
+        heading: document.getElementById('contact-heading').textContent.trim(),
+        email: C.contact.email,
+        facebook: C.contact.facebook,
+        instagram: C.contact.instagram,
+      };
+
+      edits.design = C.design;
+      edits.siteTitle = C.siteTitle;
+      edits.admin = C.admin;
+
+      return edits;
+    }
+
+    // ── Generate config.js content ──
+    function generateConfigFile(cfg) {
+      const esc = s => s.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+      let out = `// ============================================================
+//  הגדרות האתר של יוסיפיה פורת
+//  ============================================================
+//  כדי לערוך את התוכן, פשוט שנו את הטקסט בין הגרשיים "..."
+//  אין צורך לדעת תכנות! רק לשמור את הקובץ ולרענן את הדפדפן.
+//  ============================================================
+//
+//  עריכה ויזואלית: לחצו על כפתור העריכה (עיפרון) בפינה השמאלית
+//  התחתונה של המסך, ותוכלו לערוך כל טקסט ישירות על העמוד!
+//  ============================================================
+
+const SITE_CONFIG = {
+
+  siteTitle: "${esc(cfg.siteTitle)}",
+
+  hero: {
+    authorName: "${esc(cfg.hero.authorName)}",
+    tagline: "${esc(cfg.hero.tagline)}",
+    quote: "${esc(cfg.hero.quote)}",
+    authorImage: "${esc(cfg.hero.authorImage || '')}",
+  },
+
+  about: {
+    heading: "${esc(cfg.about.heading)}",
+    paragraphs: [
+${cfg.about.paragraphs.map(p => `      "${esc(p)}",`).join('\n')}
+    ],
+  },
+
+  books: [
+${cfg.books.map(b => `    {
+      title: "${esc(b.title)}",
+      year: "${esc(b.year)}",
+      genre: "${esc(b.genre)}",
+      description: "${esc(b.description)}",
+      coverImage: "${esc(b.coverImage || '')}",
+    },`).join('\n')}
+  ],
+
+  cta: {
+    heading: "${esc(cfg.cta.heading)}",
+    text: "${esc(cfg.cta.text)}",
+    buttons: [
+${cfg.cta.buttons.map(b => `      { label: "${esc(b.label)}", url: "${esc(b.url)}" },`).join('\n')}
+    ],
+  },
+
+  contact: {
+    heading: "${esc(cfg.contact.heading)}",
+    email: "${esc(cfg.contact.email || '')}",
+    facebook: "${esc(cfg.contact.facebook || '')}",
+    instagram: "${esc(cfg.contact.instagram || '')}",
+  },
+
+  design: {
+    primaryColor: "${esc(cfg.design.primaryColor)}",
+    backgroundColor: "${esc(cfg.design.backgroundColor)}",
+    textColor: "${esc(cfg.design.textColor)}",
+    secondaryColor: "${esc(cfg.design.secondaryColor)}",
+    accentColor: "${esc(cfg.design.accentColor)}",
+  },
+
+  admin: {
+    allowedEmails: [
+${(cfg.admin && cfg.admin.allowedEmails || []).map(e => `      "${esc(e)}",`).join('\n')}
+    ],
+    googleClientId: "${esc(cfg.admin && cfg.admin.googleClientId || '')}",
+  },
+};
+`;
+      return out;
+    }
+
+    // ── Init Google Sign-In on load ──
+    initGoogleSignIn();
+
+    // ── Toast notification ──
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.textContent = msg;
+      Object.assign(toast.style, {
+        position: 'fixed',
+        bottom: '6rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: '#27AE60',
+        color: 'white',
+        padding: '0.8rem 1.8rem',
+        borderRadius: '8px',
+        fontFamily: "'Noto Sans Hebrew', sans-serif",
+        fontSize: '0.9rem',
+        fontWeight: '500',
+        zIndex: '100001',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+        opacity: '0',
+        transition: 'opacity 0.3s',
+        direction: 'rtl',
+      });
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => { toast.style.opacity = '1'; });
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+  })();
+  </script>
+</body>
+</html>
