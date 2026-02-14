@@ -664,6 +664,80 @@
       color: rgba(242, 233, 220, 0.55);
     }
 
+    /* ── Testimonials ── */
+    .testimonials-section {
+      background: var(--bg-dark);
+      padding: 6rem 2rem;
+      position: relative;
+    }
+    .testimonials-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .testimonials-label {
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .testimonials-heading {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .testimonials-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .testimonial-card {
+      background: rgba(242, 233, 220, 0.04);
+      border: 1px solid rgba(201, 169, 110, 0.15);
+      border-radius: 12px;
+      padding: 1.75rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(201, 169, 110, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    .testimonial-quote {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(242, 233, 220, 0.9);
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .testimonial-quote::before {
+      content: '״';
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.4;
+      position: absolute;
+      right: -0.2rem;
+      top: -0.5rem;
+    }
+    .testimonial-author {
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gold);
+    }
+    .testimonial-source {
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.8rem;
+      color: rgba(242, 233, 220, 0.5);
+      margin-top: 0.25rem;
+    }
+
     /* ── CTA ── */
     .cta-section {
       background: var(--bg-warm);
@@ -912,7 +986,7 @@
 
       .hero-quote-wrap { padding: 1.5rem 1rem; }
 
-      .about-section, .books-section, .cta-section { padding: 5rem 1.5rem; }
+      .about-section, .books-section, .testimonials-section, .cta-section { padding: 5rem 1.5rem; }
 
       .book-card { flex-direction: column; }
 
@@ -952,6 +1026,8 @@
     <a href="#about">אודות</a>
     <div class="nav-dot"></div>
     <a href="#books">ספרים</a>
+    <div class="nav-dot"></div>
+    <a href="#testimonials">המלצות</a>
     <div class="nav-dot"></div>
     <a href="#cta">רכישה</a>
     <div class="nav-dot"></div>
@@ -1003,6 +1079,15 @@
       <h2 class="books-heading reveal">הספרים</h2>
       <p class="books-subtitle reveal">יצירות שמספרות את סיפור הארץ</p>
       <div class="books-timeline" id="books-timeline"></div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="testimonials-section" id="testimonials">
+    <div class="testimonials-inner">
+      <p class="testimonials-label reveal">מה אומרים</p>
+      <h2 class="testimonials-heading reveal" id="testimonials-heading"></h2>
+      <div class="testimonials-grid" id="testimonials-list"></div>
     </div>
   </div>
 
@@ -1080,6 +1165,12 @@
     }
     .edit-toolbar button svg { width: 16px; height: 16px; }
 
+    .edit-btn-texts {
+      background: rgba(201, 169, 110, 0.25);
+      color: var(--text-light);
+      border: 1px solid rgba(201, 169, 110, 0.4);
+    }
+    .edit-btn-texts:hover { background: rgba(201, 169, 110, 0.35); }
     .edit-btn-save {
       background: #27AE60;
       color: white;
@@ -1397,6 +1488,10 @@
     </svg>
   </button>
   <div class="edit-toolbar" id="edit-toolbar">
+    <button class="edit-btn-texts" id="edit-texts-btn" title="עריכת טקסטים">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      עריכת טקסטים
+    </button>
     <button class="edit-btn-save" id="edit-save" title="שמור שינויים">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
       שמור
@@ -1409,6 +1504,18 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
       אפס
     </button>
+  </div>
+  <!-- Modal: edit all texts in one place -->
+  <div class="auth-modal-overlay" id="texts-modal" style="display:none">
+    <div class="auth-modal texts-modal-inner" style="max-width:520px;max-height:90vh;overflow:auto">
+      <button class="auth-modal-close" id="texts-modal-close" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <h3 class="auth-modal h3" style="margin-bottom:1rem">עריכת טקסטים</h3>
+      <div id="texts-modal-fields"></div>
+      <div style="display:flex;gap:0.75rem;margin-top:1.25rem">
+        <button type="button" class="edit-btn-save" id="texts-modal-apply">החל לעמוד</button>
+        <button type="button" class="auth-modal-close" id="texts-modal-cancel" style="padding:0.7rem 1.5rem">סגור</button>
+      </div>
+    </div>
   </div>
   <div class="edit-banner" id="edit-banner">מצב עריכה פעיל — לחצו על כל טקסט או תמונה כדי לערוך</div>
 
@@ -1486,7 +1593,9 @@
     root.style.setProperty('--terracotta', d.primaryColor || '#A0522D');
 
     // ── Page title ──
-    document.getElementById('page-title').textContent = C.siteTitle;
+    const pageTitleEl = document.getElementById('page-title');
+    pageTitleEl.textContent = C.siteTitle;
+    pageTitleEl.setAttribute('data-editable', 'siteTitle');
 
     // ── Hero ──
     const heroNameEl = document.getElementById('hero-name');
@@ -1575,6 +1684,25 @@
       timeline.appendChild(entry);
     });
 
+    // ── Testimonials ──
+    if (C.testimonials && C.testimonials.items && C.testimonials.items.length) {
+      document.getElementById('testimonials-heading').textContent = C.testimonials.heading;
+      document.getElementById('testimonials-heading').setAttribute('data-editable', 'testimonials.heading');
+      const list = document.getElementById('testimonials-list');
+      C.testimonials.items.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'testimonial-card reveal';
+        card.innerHTML = `
+          <p class="testimonial-quote" data-editable="testimonials.items.${i}.quote">${item.quote}</p>
+          <div class="testimonial-author" data-editable="testimonials.items.${i}.author">${item.author}</div>
+          ${item.source ? `<div class="testimonial-source" data-editable="testimonials.items.${i}.source">${item.source}</div>` : ''}
+        `;
+        list.appendChild(card);
+      });
+    } else {
+      document.getElementById('testimonials').style.display = 'none';
+    }
+
     // ── CTA ──
     const ctaHeadingEl = document.getElementById('cta-heading');
     const ctaTextEl = document.getElementById('cta-text');
@@ -1585,11 +1713,13 @@
     const ctaButtons = document.getElementById('cta-buttons');
     C.cta.buttons.forEach((btn, i) => {
       const a = document.createElement('a');
-      a.href = btn.url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
+      a.href = btn.url.startsWith('#') ? btn.url : btn.url;
+      if (!btn.url.startsWith('#')) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
       a.className = i === 0 ? 'cta-btn cta-btn-primary' : 'cta-btn cta-btn-secondary';
-      a.innerHTML = `${btn.label}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+      a.innerHTML = `<span data-editable="cta.buttons.${i}.label">${btn.label}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
       ctaButtons.appendChild(a);
     });
 
@@ -1896,6 +2026,79 @@
       if (e.target === authModal) authModal.classList.remove('visible');
     });
 
+    // ── Texts modal: edit all key texts in one place ──
+    const textsModal = document.getElementById('texts-modal');
+    const textsModalFields = document.getElementById('texts-modal-fields');
+    const textFieldsSpec = [
+      { key: 'siteTitle', label: 'כותרת הדף (בטאב)', get: () => document.getElementById('page-title')?.textContent || '', set: (v) => { const el = document.getElementById('page-title'); if (el) el.textContent = v; } },
+      { key: 'heroName', label: 'שם המחברת', get: () => document.getElementById('hero-name')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('hero-name'); if (el) el.textContent = v; } },
+      { key: 'heroTagline', label: 'תיאור קצר (תג)', get: () => document.getElementById('hero-tagline')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('hero-tagline'); if (el) el.textContent = v; } },
+      { key: 'heroQuote', label: 'ציטוט ראשי', get: () => document.getElementById('hero-quote')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('hero-quote'); if (el) el.textContent = v; } },
+      { key: 'aboutHeading', label: 'כותרת אודות', get: () => document.getElementById('about-heading')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('about-heading'); if (el) el.textContent = v; } },
+      { key: 'aboutP0', label: 'אודות — פסקה 1', get: () => document.querySelectorAll('#about-text p')[0]?.textContent?.trim() || '', set: (v) => { const el = document.querySelectorAll('#about-text p')[0]; if (el) el.textContent = v; } },
+      { key: 'aboutP1', label: 'אודות — פסקה 2', get: () => document.querySelectorAll('#about-text p')[1]?.textContent?.trim() || '', set: (v) => { const el = document.querySelectorAll('#about-text p')[1]; if (el) el.textContent = v; } },
+      { key: 'aboutP2', label: 'אודות — פסקה 3', get: () => document.querySelectorAll('#about-text p')[2]?.textContent?.trim() || '', set: (v) => { const el = document.querySelectorAll('#about-text p')[2]; if (el) el.textContent = v; } },
+      { key: 'ctaHeading', label: 'כותרת רכישה', get: () => document.getElementById('cta-heading')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('cta-heading'); if (el) el.textContent = v; } },
+      { key: 'ctaText', label: 'טקסט רכישה', get: () => document.getElementById('cta-text')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('cta-text'); if (el) el.textContent = v; } },
+      { key: 'ctaBtn0', label: 'כפתור רכישה 1 (תווית)', get: () => document.querySelector('#cta-buttons a.cta-btn [data-editable]')?.textContent?.trim() || '', set: (v) => { const el = document.querySelector('#cta-buttons a.cta-btn [data-editable]'); if (el) el.textContent = v; } },
+      { key: 'ctaBtn1', label: 'כפתור רכישה 2 (תווית)', get: () => document.querySelectorAll('#cta-buttons a.cta-btn [data-editable]')[1]?.textContent?.trim() || '', set: (v) => { const els = document.querySelectorAll('#cta-buttons a.cta-btn [data-editable]'); if (els[1]) els[1].textContent = v; } },
+      { key: 'contactHeading', label: 'כותרת יצירת קשר', get: () => document.getElementById('contact-heading')?.textContent?.trim() || '', set: (v) => { const el = document.getElementById('contact-heading'); if (el) el.textContent = v; } },
+    ];
+    document.getElementById('edit-texts-btn').addEventListener('click', () => {
+      textsModalFields.innerHTML = '';
+      textFieldsSpec.forEach(({ key, label, get }) => {
+        const wrap = document.createElement('div');
+        wrap.style.marginBottom = '1rem';
+        const lab = document.createElement('label');
+        lab.textContent = label;
+        lab.style.display = 'block';
+        lab.style.marginBottom = '0.35rem';
+        lab.style.color = 'rgba(242,233,220,0.85)';
+        lab.style.fontSize = '0.9rem';
+        const input = document.createElement('input');
+        if (key.startsWith('aboutP') || key === 'heroQuote' || key === 'ctaText') {
+          const ta = document.createElement('textarea');
+          ta.rows = 3;
+          ta.value = get();
+          ta.style.width = '100%';
+          ta.style.padding = '0.6rem';
+          ta.style.borderRadius = '6px';
+          ta.style.border = '1px solid rgba(201,169,110,0.2)';
+          ta.style.background = 'rgba(255,255,255,0.06)';
+          ta.style.color = '#F2E9DC';
+          ta.style.fontFamily = "'Heebo', sans-serif";
+          ta.dataset.textKey = key;
+          wrap.appendChild(lab);
+          wrap.appendChild(ta);
+        } else {
+          input.type = 'text';
+          input.value = get();
+          input.style.width = '100%';
+          input.style.padding = '0.6rem';
+          input.style.borderRadius = '6px';
+          input.style.border = '1px solid rgba(201,169,110,0.2)';
+          input.style.background = 'rgba(255,255,255,0.06)';
+          input.style.color = '#F2E9DC';
+          input.dataset.textKey = key;
+          wrap.appendChild(lab);
+          wrap.appendChild(input);
+        }
+        textsModalFields.appendChild(wrap);
+      });
+      textsModal.style.display = 'flex';
+    });
+    document.getElementById('texts-modal-apply').addEventListener('click', () => {
+      textFieldsSpec.forEach(({ key, set }) => {
+        const input = textsModalFields.querySelector(`[data-text-key="${key}"]`);
+        if (input) set(input.value.trim());
+      });
+      textsModal.style.display = 'none';
+      showToast('הטקסטים עודכנו בעמוד');
+    });
+    document.getElementById('texts-modal-close').addEventListener('click', () => { textsModal.style.display = 'none'; });
+    document.getElementById('texts-modal-cancel').addEventListener('click', () => { textsModal.style.display = 'none'; });
+    textsModal.addEventListener('click', (e) => { if (e.target === textsModal) textsModal.style.display = 'none'; });
+
     // ── Logout ──
     document.getElementById('auth-logout').addEventListener('click', () => {
       authenticatedUser = null;
@@ -1913,14 +2116,16 @@
       showToast('התנתקת בהצלחה');
     });
 
+    function preventCtaNav(e) { e.preventDefault(); }
     function enableEditing() {
-      // Mark text elements as editable
       document.querySelectorAll('[data-editable]').forEach(el => {
         el.contentEditable = 'true';
       });
-      // Mark images as clickable for replacement
       document.querySelectorAll('[data-editable-img]').forEach(el => {
         el.addEventListener('click', onImageClick);
+      });
+      document.querySelectorAll('#cta-buttons a.cta-btn').forEach(a => {
+        a.addEventListener('click', preventCtaNav);
       });
     }
 
@@ -1930,6 +2135,9 @@
       });
       document.querySelectorAll('[data-editable-img]').forEach(el => {
         el.removeEventListener('click', onImageClick);
+      });
+      document.querySelectorAll('#cta-buttons a.cta-btn').forEach(a => {
+        a.removeEventListener('click', preventCtaNav);
       });
     }
 
@@ -2098,11 +2306,40 @@
         });
       });
 
+      // Testimonials
+      const testimonialsSection = document.getElementById('testimonials');
+      if (testimonialsSection && testimonialsSection.style.display !== 'none') {
+        const th = document.getElementById('testimonials-heading');
+        const cards = document.querySelectorAll('.testimonial-card');
+        edits.testimonials = {
+          heading: th ? th.textContent.trim() : (C.testimonials && C.testimonials.heading) || 'חוות דעת והמלצות',
+          items: Array.from(cards).map((card, i) => {
+            const quoteEl = card.querySelector('.testimonial-quote');
+            const authorEl = card.querySelector('.testimonial-author');
+            const sourceEl = card.querySelector('.testimonial-source');
+            return {
+              quote: quoteEl ? quoteEl.textContent.trim() : (C.testimonials && C.testimonials.items && C.testimonials.items[i]) ? C.testimonials.items[i].quote : '',
+              author: authorEl ? authorEl.textContent.trim() : (C.testimonials && C.testimonials.items && C.testimonials.items[i]) ? C.testimonials.items[i].author : '',
+              source: sourceEl ? sourceEl.textContent.trim() : (C.testimonials && C.testimonials.items && C.testimonials.items[i]) ? (C.testimonials.items[i].source || '') : '',
+            };
+          }),
+        };
+      } else if (C.testimonials) {
+        edits.testimonials = C.testimonials;
+      }
+
       // CTA
+      const ctaBtnLinks = document.querySelectorAll('#cta-buttons a');
       edits.cta = {
         heading: document.getElementById('cta-heading').textContent.trim(),
         text: document.getElementById('cta-text').textContent.trim(),
-        buttons: C.cta.buttons,
+        buttons: Array.from(ctaBtnLinks).map((a, i) => {
+          const labelEl = a.querySelector('[data-editable]');
+          return {
+            label: labelEl ? labelEl.textContent.trim() : C.cta.buttons[i]?.label || '',
+            url: C.cta.buttons[i]?.url || a.getAttribute('href') || '',
+          };
+        }),
       };
 
       // Contact
@@ -2114,7 +2351,8 @@
       };
 
       edits.design = C.design;
-      edits.siteTitle = C.siteTitle;
+      const pageTitleEl = document.getElementById('page-title');
+      edits.siteTitle = pageTitleEl ? pageTitleEl.textContent.trim() : C.siteTitle;
       edits.admin = C.admin;
 
       return edits;
@@ -2161,6 +2399,13 @@ ${cfg.books.map(b => `    {
       coverImage: "${esc(b.coverImage || '')}",
     },`).join('\n')}
   ],
+
+  testimonials: {
+    heading: "${esc((cfg.testimonials && cfg.testimonials.heading) || 'חוות דעת והמלצות')}",
+    items: [
+${(cfg.testimonials && cfg.testimonials.items || []).map(t => `      { quote: "${esc(t.quote || '')}", author: "${esc(t.author || '')}", source: "${esc(t.source || '')}" },`).join('\n')}
+    ],
+  },
 
   cta: {
     heading: "${esc(cfg.cta.heading)}",

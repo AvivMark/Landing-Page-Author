@@ -1,37 +1,21 @@
 // ============================================================
-//  הגדרות האתר של יוסיפיה פורת
-//  ============================================================
-//  כדי לערוך את התוכן, פשוט שנו את הטקסט בין הגרשיים "..."
-//  אין צורך לדעת תכנות! רק לשמור את הקובץ ולרענן את הדפדפן.
-//  ============================================================
-//
-//  עריכה ויזואלית: לחצו על כפתור העריכה (עיפרון) בפינה השמאלית
-//  התחתונה של המסך, ותוכלו לערוך כל טקסט ישירות על העמוד!
+//  תבנית הגדרות — נתונים רגישים מוזרקים מ-GitHub Secrets בפריסה
+//  לפיתוח מקומי: העתיקו לקובץ config.js והחליפו את __PLACEHOLDER__ בערכים
 //  ============================================================
 
 const SITE_CONFIG = {
 
-  // ── כותרת הדף (מופיעה בלשונית הדפדפן) ──
   siteTitle: "יוסיפיה פורת | סופרת",
 
-  // ── חלק עליון (Hero) ──
   hero: {
-    // שם המחברת
     authorName: "יוסיפיה פורת",
-    // תיאור קצר מתחת לשם
     tagline: "סופרת ישראלית | מספרת את סיפור הארץ",
-    // ציטוט מרכזי (אפשר לשנות לכל ציטוט שתרצו)
     quote: "״הסיפורים שלי הם חלונות אל ימים שעברו, אל ריחות האדמה ואל אנשים שבנו את הארץ הזו בידיים חשופות.״",
-    // תמונת המחברת — החליפו את הנתיב לתמונה שלכם
-    // אפשר לשים תמונה בתיקיית images/ (למשל author.jpg) ולכתוב כאן: "images/author.jpg"
     authorImage: "images/author.png",
   },
 
-  // ── אודות ──
   about: {
-    // כותרת הסקשן
     heading: "אודות הסופרת",
-    // פסקאות - כל שורה היא פסקה נפרדת
     paragraphs: [
       "יוסיפיה פורת, תושבת קריית מוצקין, היא סופרת ישראלית שיצירותיה מספרות את סיפורה של ארץ ישראל בראשית דרכה.",
       "סיפוריה פורסמו ב-ynet, בכתב העת של אגודת הסופרים ״מאזניים״ ובכתבי עת נוספים. בספריה היא שוזרת זיכרונות אישיים עם תמונות היסטוריות מימי ההתיישבות, מלחמת העצמאות והשנים הראשונות של המדינה.",
@@ -39,104 +23,41 @@ const SITE_CONFIG = {
     ],
   },
 
-  // ── ספרים ──
-  // כדי להוסיף ספר: העתיקו בלוק קיים ושנו את הפרטים
-  // כדי להסיר ספר: מחקו את הבלוק שלו (מהסוגריים { עד },)
+  // כריכות הספרים — קבצים מקומיים בתיקיית images/books/ (נתיבים יחסיים, עובדים ב-GitHub Pages)
   books: [
-    {
-      title: "סרטיפיקט לחיים",
-      year: "2026",
-      genre: "פרוזה",
-      description: "סיפור חיים מרתק על המסע לארץ ישראל, על התקווה הגדולה שנשאו העולים בלבם ועל המציאות שחיכתה להם.",
-      coverImage: "https://images-evrit.yit.co.il/Images/Products/NewBO/Products/38472/Image_life_Master.jpg",
-    },
-    {
-      title: "צל האזדרכת",
-      year: "2016",
-      genre: "פרוזה",
-      description: "תחת צילו של עץ האזדרכת נפרשים סיפורי משפחה, זיכרונות ילדות וחיי שכונה בישראל של פעם.",
-      coverImage: "https://images-evrit.yit.co.il/Images/Products/newcovers/image_zel_master.jpg",
-    },
-    {
-      title: "לראות בשדות זרים",
-      year: "2012",
-      genre: "פרוזה",
-      description: "מבט עמוק על חיי ישראלים בין מולדת לגלות, בין שורשים למרחבים חדשים.",
-      coverImage: "https://images-evrit.yit.co.il/Images/Products/ebooks2/image_lirotbsdot_master.jpg",
-    },
-    {
-      title: "הארונית הקסומה של סבתא",
-      year: "2011",
-      genre: "ספר ילדים ונוער",
-      description: "סיפור קסום לילדים על סבתא, ארונית ישנה ושערים מפתיעים אל העבר.",
-      coverImage: "https://images-evrit.yit.co.il/Images/Products/ebooks2/image_grandmas_magical_drawe_master.jpg",
-    },
-    {
-      title: "פניצילין ועוד סיפורים",
-      year: "2009",
-      genre: "פרוזה",
-      description: "אוסף סיפורים קצרים שמציירים את חיי היומיום בישראל בגוונים של הומור, געגוע ואנושיות.",
-      coverImage: "https://images-evrit.yit.co.il/Images/Products/ebooks2/image_penicilin_master.jpg",
-    },
+    { title: "סרטיפיקט לחיים", year: "2026", genre: "פרוזה", description: "3 חלוצות צעירות שהעזו לחלום לבנות ולאהוב ב3 מסעות נועזים מוורשה הקודרת אל האור הלא מובטח בתל אביב ובחיפה", coverImage: "images/books/certificat-lechayim.jpg" },
+    { title: "צל האזדרכת", year: "2016", genre: "פרוזה", description: "תחת צילו של עץ האזדרכת נפרשים סיפורי משפחה, זיכרונות ילדות וחיי שכונה בישראל של פעם.", coverImage: "images/books/zel-haazderech.jpg" },
+    { title: "לראות בשדות זרים", year: "2012", genre: "פרוזה", description: "מבט עמוק על חיי ישראלים בין מולדת לגלות, בין שורשים למרחבים חדשים.", coverImage: "images/books/lirot-besdot-zarim.jpg" },
+    { title: "הארונית הקסומה של סבתא", year: "2011", genre: "ספר ילדים ונוער", description: "סיפור קסום לילדים על סבתא, ארונית ישנה ושערים מפתיעים אל העבר.", coverImage: "images/books/aronit-kesuma.jpg" },
+    { title: "פניצילין ועוד סיפורים", year: "2009", genre: "פרוזה", description: "אוסף סיפורים קצרים שמציירים את חיי היומיום בישראל בגוונים של הומור, געגוע ואנושיות.", coverImage: "images/books/penicilin.jpg" },
   ],
 
-  // ── קטע קריאה לפעולה (Call to Action) ──
   cta: {
     heading: "רוצים לקרוא?",
-    text: "הספרים זמינים לרכישה בחנויות הספרים המובילות ובפורמט דיגיטלי",
-    // כפתורים — שנו את הכתובות (url) לקישורים אמיתיים
+    text: "ספרים מודפסים ניתן להשיג רק דרך המחברת. ספרים דיגיטליים — רק דרך אתר עברית.",
     buttons: [
-      {
-        label: "e-vrit | עברית",
-        url: "https://www.e-vrit.co.il/Author/602/%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%94_%D7%A4%D7%95%D7%A8%D7%AA",
-      },
-      {
-        label: "הוצאת אוריון",
-        url: "https://www.orion-books.co.il/product/manufacturer/89/%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%94-%D7%A4%D7%95%D7%A8%D7%AA.aspx",
-      },
+      { label: "ספרים דיגיטליים — ספר עברית", url: "https://www.e-vrit.co.il/Author/602/%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%94_%D7%A4%D7%95%D7%A8%D7%AA" },
+      { label: "ספרים מודפסים — יצירת קשר", url: "#contact" },
     ],
   },
 
-  // ── יצירת קשר ──
   contact: {
     heading: "יצירת קשר",
-    // אימייל (החליפו לכתובת האמיתית)
-    email: "yosifia015@gmail.com",
-    // פייסבוק (כתובת העמוד המלאה — החליפו לקישור האמיתי)
-    facebook: "https://www.facebook.com/yosefa.porat/",
-    // אינסטגרם (השאירו ריק "" אם לא רוצים להציג)
-    instagram: "",
+    email: "__CONTACT_EMAIL__",
+    facebook: "__CONTACT_FACEBOOK__",
+    instagram: "__CONTACT_INSTAGRAM__",
   },
 
-  // ── הרשאות עריכה ──
-  // רק כתובות אימייל ברשימה הזו יכולות לערוך את האתר
-  // כדי להוסיף עורך נוסף, הוסיפו את האימייל שלו בשורה חדשה
   admin: {
-    allowedEmails: [
-      "your-email@example.com",  // החלפו באימייל שלכם
-    ],
-    // ── Google OAuth Client ID ──
-    // צרו Client ID בכתובת: https://console.cloud.google.com/apis/credentials
-    // 1. צרו פרויקט חדש (או השתמשו בקיים)
-    // 2. לחצו "Create Credentials" > "OAuth client ID"
-    // 3. בחרו "Web application"
-    // 4. הוסיפו את כתובת האתר ב-"Authorized JavaScript origins"
-    // 5. העתיקו את ה-Client ID לכאן
-    googleClientId: "YOUR_GOOGLE_CLIENT_ID_HERE",
+    allowedEmails: __ALLOWED_EMAILS__,
+    googleClientId: "__GOOGLE_CLIENT_ID__",
   },
 
-  // ── עיצוב ──
-  // אם תרצו לשנות צבעים, שנו את הערכים כאן
   design: {
-    // צבע ראשי (חום-טרקוטה)
     primaryColor: "#B85C38",
-    // צבע רקע (קרם חם)
     backgroundColor: "#F5F0E8",
-    // צבע טקסט (חום כהה)
     textColor: "#2C1810",
-    // צבע משני (זית)
     secondaryColor: "#6B7B3A",
-    // צבע זהב (להדגשות)
     accentColor: "#D4A853",
   },
 };

@@ -25,19 +25,28 @@ const SITE_CONFIG = {
 
   // כריכות הספרים — קבצים מקומיים בתיקיית images/books/ (נתיבים יחסיים, עובדים ב-GitHub Pages)
   books: [
-    { title: "סרטיפיקט לחיים", year: "2026", genre: "פרוזה", description: "סיפור חיים מרתק על המסע לארץ ישראל, על התקווה הגדולה שנשאו העולים בלבם ועל המציאות שחיכתה להם.", coverImage: "images/books/certificat-lechayim.jpg" },
+    { title: "סרטיפיקט לחיים", year: "2026", genre: "פרוזה", description: "3 חלוצות צעירות שהעזו לחלום לבנות ולאהוב ב־3 מסעות נועזים מוורשה הקודרת אל האור הלא מובטח בתל אביב ובחיפה.", coverImage: "images/books/certificat-lechayim.jpg" },
     { title: "צל האזדרכת", year: "2016", genre: "פרוזה", description: "תחת צילו של עץ האזדרכת נפרשים סיפורי משפחה, זיכרונות ילדות וחיי שכונה בישראל של פעם.", coverImage: "images/books/zel-haazderech.jpg" },
     { title: "לראות בשדות זרים", year: "2012", genre: "פרוזה", description: "מבט עמוק על חיי ישראלים בין מולדת לגלות, בין שורשים למרחבים חדשים.", coverImage: "images/books/lirot-besdot-zarim.jpg" },
     { title: "הארונית הקסומה של סבתא", year: "2011", genre: "ספר ילדים ונוער", description: "סיפור קסום לילדים על סבתא, ארונית ישנה ושערים מפתיעים אל העבר.", coverImage: "images/books/aronit-kesuma.jpg" },
     { title: "פניצילין ועוד סיפורים", year: "2009", genre: "פרוזה", description: "אוסף סיפורים קצרים שמציירים את חיי היומיום בישראל בגוונים של הומור, געגוע ואנושיות.", coverImage: "images/books/penicilin.jpg" },
   ],
 
+  testimonials: {
+    heading: "חוות דעת והמלצות",
+    items: [
+      { quote: "קראתי את ׳סרטיפיקט לחיים׳ בנשימה אחת. הסיפור נוגע ללב ומעלה זיכרונות של דור המייסדים.", author: "קוראת מותשבת", source: "" },
+      { quote: "הכתיבה של יוסיפיה פורת ציורית ומרגשת. כל ספר שלה הוא מסע בזמן אל ארץ ישראל של פעם.", author: "חברת אגודת הסופרים", source: "" },
+      { quote: "הספרים שלה מתאימים לכל גיל — סיפורים ששוזרים היסטוריה, משפחה ואהבה לארץ.", author: "מבקרת ספרות", source: "" },
+    ],
+  },
+
   cta: {
     heading: "רוצים לקרוא?",
-    text: "הספרים זמינים לרכישה בחנויות הספרים המובילות ובפורמט דיגיטלי",
+    text: "ספרים מודפסים ניתן להשיג רק דרך המחברת. ספרים דיגיטליים — רק דרך אתר עברית.",
     buttons: [
-      { label: "e-vrit | עברית", url: "https://www.e-vrit.co.il/Author/602/%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%94_%D7%A4%D7%95%D7%A8%D7%AA" },
-      { label: "הוצאת אוריון", url: "https://www.orion-books.co.il/product/manufacturer/89/%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%94-%D7%A4%D7%95%D7%A8%D7%AA.aspx" },
+      { label: "ספרים דיגיטליים — ספר עברית", url: "https://www.e-vrit.co.il/Author/602/%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%94_%D7%A4%D7%95%D7%A8%D7%AA" },
+      { label: "ספרים מודפסים — יצירת קשר", url: "#contact" },
     ],
   },
 
