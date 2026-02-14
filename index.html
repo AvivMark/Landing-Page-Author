@@ -537,6 +537,29 @@
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
     }
 
+    .book-entry--latest .book-card {
+      border-color: rgba(201, 169, 110, 0.35);
+      background: rgba(201, 169, 110, 0.06);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+    .book-entry--latest .book-card:hover {
+      border-color: rgba(201, 169, 110, 0.5);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+    }
+    .book-latest-badge {
+      display: inline-block;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      background: rgba(201, 169, 110, 0.15);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-right: 0.6rem;
+      text-transform: uppercase;
+    }
+
     .book-cover {
       width: 140px;
       min-height: 190px;
@@ -1510,10 +1533,12 @@
       { bg: '#1A2B3D', fg: '#A0B8C9' },
     ];
 
+    const latestYear = C.books.length ? Math.max(...C.books.map(b => parseInt(b.year, 10) || 0)) : 0;
     C.books.forEach((book, i) => {
       const style = coverStyles[i % coverStyles.length];
       const entry = document.createElement('div');
-      entry.className = 'book-entry reveal';
+      const isLatest = parseInt(book.year, 10) === latestYear;
+      entry.className = 'book-entry reveal' + (isLatest ? ' book-entry--latest' : '');
 
       let coverHTML;
       if (book.coverImage) {
@@ -1535,6 +1560,7 @@
             ${coverHTML}
             <div class="book-info">
               <div class="book-info-meta">
+                ${isLatest ? '<span class="book-latest-badge">חדש</span>' : ''}
                 <span class="book-info-year" data-editable="books.${i}.year">${book.year}</span>
                 <span class="book-info-genre" data-editable="books.${i}.genre">${book.genre}</span>
               </div>
@@ -1761,13 +1787,19 @@
     // ── Initialize Google Sign-In button ──
     function initGoogleSignIn() {
       if (typeof google === 'undefined' || !google.accounts) {
-        // Google library not loaded yet, retry
         setTimeout(initGoogleSignIn, 300);
         return;
       }
-      if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE') {
-        // No client ID configured - show edit button directly for local development
+      const isLocalhost = /localhost|127\.0\.0\.1|file:\/\//i.test(window.location.origin || '');
+      const hasClientId = GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID_HERE';
+      const hasAllowedList = ALLOWED_EMAILS.length > 0;
+      if (!hasClientId && isLocalhost && !hasAllowedList) {
+        // Local dev only: no auth configured, show FAB for testing
         fab.classList.add('authenticated');
+        authenticatedUser = { email: 'dev@local', name: 'מפתח', picture: '' };
+        return;
+      }
+      if (!hasClientId) {
         return;
       }
       google.accounts.id.initialize({
@@ -1787,33 +1819,58 @@
       );
     }
 
-    // Check for stored session
+    // Show FAB only for allowed users (or local dev when no list configured)
+    function maybeShowEditFAB() {
+      if (!authenticatedUser) return false;
+      if (ALLOWED_EMAILS.length === 0) return false;
+      if (!ALLOWED_EMAILS.includes(authenticatedUser.email)) return false;
+      fab.classList.add('authenticated');
+      document.getElementById('auth-badge-name').textContent = authenticatedUser.name;
+      const pic = document.getElementById('auth-badge-pic');
+      if (authenticatedUser.picture) {
+        pic.src = authenticatedUser.picture;
+        pic.style.display = 'block';
+      } else {
+        pic.style.display = 'none';
+      }
+      authBadge.classList.add('visible');
+      return true;
+    }
     const storedAuth = sessionStorage.getItem('yosifia_auth');
     if (storedAuth) {
       try {
         authenticatedUser = JSON.parse(storedAuth);
-        if (ALLOWED_EMAILS.includes(authenticatedUser.email)) {
-          fab.classList.add('authenticated');
-          document.getElementById('auth-badge-name').textContent = authenticatedUser.name;
-          const pic = document.getElementById('auth-badge-pic');
-          if (authenticatedUser.picture) {
-            pic.src = authenticatedUser.picture;
-            pic.style.display = 'block';
+        if (authenticatedUser && authenticatedUser.email) {
+          if (ALLOWED_EMAILS.includes(authenticatedUser.email)) {
+            maybeShowEditFAB();
           } else {
-            pic.style.display = 'none';
+            authenticatedUser = null;
+            sessionStorage.removeItem('yosifia_auth');
           }
-          authBadge.classList.add('visible');
         }
       } catch(e) {}
     }
+    const isLocalhost = /localhost|127\.0\.0\.1|file:\/\//i.test(window.location.origin || '');
+    if (!authenticatedUser && isLocalhost && ALLOWED_EMAILS.length === 0 && (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE')) {
+      authenticatedUser = { email: 'dev@local', name: 'מפתח', picture: '' };
+      fab.classList.add('authenticated');
+    }
 
-    // ── FAB click — show auth or toggle edit ──
+    // ── FAB click — show auth or toggle edit (only allowed users can enter edit mode) ──
     fab.addEventListener('click', () => {
-      if (!authenticatedUser && GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID_HERE') {
-        // Need to authenticate first
-        authError.style.display = 'none';
-        authModal.classList.add('visible');
-        initGoogleSignIn();
+      const hasClientId = GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID_HERE';
+      if (!authenticatedUser) {
+        if (hasClientId) {
+          authError.style.display = 'none';
+          authModal.classList.add('visible');
+          initGoogleSignIn();
+        } else {
+          showToast('עריכה זמינה רק למשתמשים מורשים');
+        }
+        return;
+      }
+      if (ALLOWED_EMAILS.length && !ALLOWED_EMAILS.includes(authenticatedUser.email)) {
+        showToast('האימייל שלך לא מורשה לערוך את האתר');
         return;
       }
 
@@ -1824,9 +1881,7 @@
       banner.classList.toggle('visible', editMode);
 
       if (editMode) {
-        if (authenticatedUser) {
-          sessionStorage.setItem('yosifia_auth', JSON.stringify(authenticatedUser));
-        }
+        sessionStorage.setItem('yosifia_auth', JSON.stringify(authenticatedUser));
         enableEditing();
       } else {
         disableEditing();
