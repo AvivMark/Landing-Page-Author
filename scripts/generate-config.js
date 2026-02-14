@@ -11,6 +11,11 @@ const root = path.join(__dirname, '..');
 const templatePath = path.join(root, 'config.template.js');
 const outputPath = path.join(root, 'config.js');
 
+if (!fs.existsSync(templatePath)) {
+  console.error('Missing config.template.js at', templatePath);
+  process.exit(1);
+}
+
 let content = fs.readFileSync(templatePath, 'utf8');
 
 const replacements = [
@@ -26,17 +31,21 @@ for (const [placeholder, value] of replacements) {
 
 // ALLOWED_EMAILS: expect JSON array string, e.g. ["a@b.com","b@c.com"]
 let allowedEmails = '["your-email@example.com"]';
-if (process.env.ALLOWED_EMAILS) {
+const raw = process.env.ALLOWED_EMAILS;
+if (raw && String(raw).trim()) {
   try {
-    const parsed = JSON.parse(process.env.ALLOWED_EMAILS);
+    const parsed = JSON.parse(String(raw).trim());
     if (Array.isArray(parsed)) {
       allowedEmails = JSON.stringify(parsed);
     }
   } catch (_) {
-    // fallback: treat as comma-separated
-    const emails = process.env.ALLOWED_EMAILS.split(',').map(s => s.trim()).filter(Boolean);
-    allowedEmails = JSON.stringify(emails);
+    const emails = String(raw).split(',').map(s => s.trim()).filter(Boolean);
+    if (emails.length) allowedEmails = JSON.stringify(emails);
   }
+}
+if (!content.includes('__ALLOWED_EMAILS__')) {
+  console.error('Template missing __ALLOWED_EMAILS__ placeholder');
+  process.exit(1);
 }
 content = content.replace('__ALLOWED_EMAILS__', allowedEmails);
 

@@ -71,3 +71,14 @@
 - **כריכות ספרים:** `images/books/*.jpg` — שמות הקבצים רשומים ב-`config.template.js` וב-`images/books/README.md`
 
 אם הוספת ספר חדש, הוסיפי את קובץ הכריכה ל-`images/books/` ועדכני את `coverImage` ב-`config.template.js` לנתיב המקומי (למשל `images/books/name.jpg`).
+
+---
+
+## 6. אם ה-workflow נכשל
+
+1. **Settings → Pages** — וודאי ש-**Source** הוא **GitHub Actions** (לא "Deploy from a branch"). רק כך נוצר ה-environment `github-pages` שה-deploy job צריך.
+2. **Actions** → לחצי על הריצה שנכשלה → קראי את הודעת השגיאה:
+   - **"config.template.js not found"** — וודאי שהקובץ `config.template.js` קיים ב-root של הפרויקט ונדחף ל-GitHub.
+   - **"Environment github-pages not found"** — בחרי ב-Pages ב-Source: GitHub Actions ושמרי; אחרי דקה נסי שוב.
+   - **"config.js was not generated"** — ייתכן שחסרים Secrets. הוסיפי לפחות `CONTACT_EMAIL` ו-`CONTACT_FACEBOOK` ב-Settings → Secrets and variables → Actions (אפשר להשאיר ריקים אם צריך).
+3. אחרי תיקון — **push** נוסף ל-`main` מפעיל שוב את ה-workflow.
