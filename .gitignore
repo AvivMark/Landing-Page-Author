@@ -1,0 +1,9 @@
+# Secrets and local overrides
+.env
+.env.*
+config.local.js
+*.pem
+*.key
+
+# OS
+.DS_Store
